@@ -1,5 +1,7 @@
 # WaterBot 
-Beta version written by Jane Yin
+Beta version 
+
+written by Jane Yin
 # A python script that provides a quick testing of the bulk properties for batch of new water models
 
 
