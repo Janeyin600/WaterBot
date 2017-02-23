@@ -51,7 +51,7 @@ which contains the final resutls after all iterations will be generated.
 
 A water score is an arbitrary measurement which reflects the deviation of the computed properties from the experimental data 
 for a given water model. A higher score means smaller deviations. The score for TIP3P water is about 16 (sometimes depends on how long
-you run). In the sample file waterbot.in, five properties were given an equal weight 20%. You could put more weight on certain 
+you run). In the sample file waterbot.in, five properties were given an equal weight of 20%. You could put more weight on certain 
 properties, or you could put zero weight on proerties that are not siginicant to you.
 
 The geometry and non-bonded parameters of TIP3P water is hand coded in waterbot.py for now, so are the the experimental properties 
