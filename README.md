@@ -62,4 +62,7 @@ of the bulk water in liquid phase at 298.15 K. Please check carefully to make su
 test water properties at different temperatured, you may need to modify the experimental values in the scripts.
 If you have any feedback about this program, drop me a few lines to jiyin >_< ucsd.edu. I wil be also glad to answer any questions you have.
 
+Acknowledgements
+
+Many thanks to Niel Henriksen who provided great advice on how to compute enthalpy vaporizations, and David Slochower who provided siginicant help on my Python programming. And our project leader, Michael Gilson, of course. 
 
