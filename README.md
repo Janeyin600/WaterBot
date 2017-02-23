@@ -50,7 +50,7 @@ such as amber14 or amber12, then use "amber16 = no".
 
 The "quiet" entry is for you to decide whether a detailed input file for each water model will be printed out (quiet = no), which contains
 the cumulative results after each iteration, so that you can check the convergence of each property. Otherwise, only the summary file
-which contains the final resutls after all iterations will be generated.
+which contains the final resutls after all iterations will be generated (quiet = yes).
 
 A water score is an arbitrary measurement which reflects the deviation of the computed properties from the experimental data 
 for a given water model. A higher score means smaller deviations. The score for TIP3P water is about 16 (sometimes depends on how long
