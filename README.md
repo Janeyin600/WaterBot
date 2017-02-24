@@ -2,7 +2,7 @@
 a beta version 
 
 Written by Jane Yin
-# A python script that provides a quick testing of the bulk properties for batch of new water models
+# A set of python scripts that provides a quick testing of the bulk properties for batch of new water models
 
 
 Waterbot is a small program that allows you to evaluate the bulk properties of new water models. It can assess multiple water models 
