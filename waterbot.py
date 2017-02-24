@@ -456,7 +456,7 @@ def welcome_message():
     print('*************************************************************************')
     print(' Welcome to WaterBot:')
     print('     a program that calculates the bulk properties of new water models.')
-    print('                    Version 1.0 Beta\n')
+    print('                    a beta version \n')
     print(' Written by: Jian (Jane) Yin')
     print(' Copyright (c) 2017-, University of California, San Diego')
     print('*************************************************************************')
