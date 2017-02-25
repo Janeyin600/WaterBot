@@ -1,0 +1,6 @@
+#Water Model #Temperature (K)  #Density (g/cm^3)  #Dielectric Constant  #Isothermal compressibility (10^(-6) bar^(-1)) ...
+... #Thermal Expansion Coefficient (10^(-4)K^(-1)) #Heat of Vaporization (kcal/mol) #Water Score
+
+1       298.19     0.985    97.251    57.775     9.001    10.088      16.2
+2       298.16     0.891    87.631    76.350    11.776     8.891      10.7
+3       298.16     0.967    99.635    58.590     9.997     9.754      14.0
