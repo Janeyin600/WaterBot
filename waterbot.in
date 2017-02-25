@@ -20,7 +20,7 @@ cycle = 65              ; 65 iterations, a total of 65 ns MD simulations
 vdw_cutoff = 9          ; 9 Angstrom for the van der Waals cutoff
 
 ; Weights of properties for generating water scores
-quiet = no              ; will only print the water properties after all iterations, less analyzing time needed 
+quiet = yes              ; will only print the water properties after all iterations, less analyzing time needed 
 density = 0.20          		  ; 20%, five properties take a equal amount of weight in this case 
 heat_of_vaporization = 0.20               ; 20% 
 dielectric_constant = 0.20                ; 20%
