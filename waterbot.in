@@ -13,7 +13,7 @@ water_site = 3		; Only three-site water model is supported for now
 
 ; MD settings
 temperature = 298.15	; The system should be maintained as 298.15 Kelvin.
-dt = 2			; A time step of 4 fs per step
+dt = 2			; A time step of 2 fs per step
 nstlim = 500000         ; Run a total of 500,000 molecular dynamics steps, to give a total simulation time of 1 ns
 output_freq = 250       ; Write to the output files (both trajectory and energy log files) every 250 steps (1 ps)
 cycle = 65              ; 65 iterations, a total of 65 ns MD simulations
