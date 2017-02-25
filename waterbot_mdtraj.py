@@ -8,27 +8,25 @@ import math
 import numpy as np
 import mdtraj.utils.unit.unit_definitions as u
 
+convert_pressure =   1.45837843401E-5 # This factor converts the unit atm to kcal/mol/Angstrom^3
+GAS_CONSTANT     =   8.314459848
+kj2kcal          =   0.239006 # This factor converts kj/mol to kcal/mol
+nm3toA3          =   1000
+j2kj             =   0.001    
+
+# Correction terms for computing enthalpy of vaporization, obtained from the classic TIP3P-EW paper:Horn et al. J.Chem. Phys. 120, 9665 (2004)
+Cvib             =  -0.0651    # in Kcal/mol
+Cni              =  -0.0048    # in Kcal/mol
+Cx               =   0         # This correction term is neglectable    
+
+# Partial charge of the TIP3P water models. hand coded for now, will be removed soon for charge pertubing functionality!
+hw_charge        =   0.417
+ow_charge        = - 0.834 
+
 def mdtraj_analysis(quiet, bulk, water_index, summary_file, local_file, cycle, waters, temp, output_freq, steps, stepsize):
     """
     Using mdtraj to analyze the Amber trajectory
     """
-    Gas_constant = 8.314459848
-
-    # This factor converts the unit atm to kcal/mol/Angstrom^3
-    convert_pressure = 1.45837843401*0.00001   
-   
-    # This factor converts kj/mol to kcal/mol
-    kj2kcal = 0.239006  
-       
-    nm3toA3 = 1000
-    j2kj = 0.001    
-
-    # Correction terms for computing enthalpy of vaporization, obtained from the classic TIP3P-EW paper:
-    # Horn et al. J.Chem. Phys. 120, 9665 (2004)
-    Cvib = -0.0651   # in Kcal/mol
-    Cni  = -0.0048   # in Kcal/mol
-    Cx   = 0         # This correction term is neglectable    
-
     print 'Generating', local_file, '...'
     # Append the local report for each water model
     if quiet == 'no':
@@ -40,10 +38,6 @@ def mdtraj_analysis(quiet, bulk, water_index, summary_file, local_file, cycle, w
     f_summary.write('\n%-8d'%(water_index))
 
     frames_per_iteration = int(steps/output_freq)
-
-    # hard coded for now, will be removed soon for flexibility!
-    hw_charge = 0.417
-    ow_charge = -0.834 
     
     temp_list    = []
     energy_list  = []
@@ -71,14 +65,16 @@ def mdtraj_analysis(quiet, bulk, water_index, summary_file, local_file, cycle, w
     ##############################################################
     if quiet == 'no':
       f_local.write('###### Density (unit: g/cm^3) ######\n') 
-      for iteration in range(cycle):
+
+    for iteration in range(cycle):
         with open('traj.%02d.out'%(iteration+1)) as f:
           lines = f.read().splitlines()
           lines.pop(0)
        	  new_density = [float(line.split(',')[4]) for line in lines]
        	  density_list +=	new_density
           average_density = sum(density_list)/len(density_list)
-          f_local.write('After iteration %03d: %10.4f\n'%(iteration+1, average_density))
+          if quiet == 'no':
+            f_local.write('After iteration %03d: %10.4f\n'%(iteration+1, average_density))
     
     final_density = np.mean(density_list)     
     f_summary.write('%10.3f'%(final_density))
@@ -105,7 +101,6 @@ def mdtraj_analysis(quiet, bulk, water_index, summary_file, local_file, cycle, w
       new_t = md.load('traj.%02d.h5'%(iteration+1))
       t = t.join(new_t,True)
       if quiet == 'no':
-        print 'I am here'
         dielectric_constant = md.static_dielectric(t, charges, temp)
         f_local.write('After iteration %03d: %10.4f\n'%(iteration+1, dielectric_constant))
 
@@ -144,18 +139,18 @@ def mdtraj_analysis(quiet, bulk, water_index, summary_file, local_file, cycle, w
     if os.path.isfile('traj.01.h5'):
       t = md.load('traj.01.h5')
       if quiet == 'no':
-        thermal_expansion = 10000.0*thermal_expansion_alpha_P(Gas_constant, t, temp, energy_list[0:frames_per_iteration])
+        thermal_expansion = 10000.0*thermal_expansion_alpha_P(t, temp, energy_list[0:frames_per_iteration])
         f_local.write('After iteration 001: %10.4f\n'%(thermal_expansion))
 
     for iteration in range(1,cycle):
       new_t = md.load('traj.%02d.h5'%(iteration+1))
       t = t.join(new_t,True)
       if quiet == 'no':
-        thermal_expansion = 10000*thermal_expansion_alpha_P(Gas_constant, t, temp,  energy_list[0: (iteration+1)*frames_per_iteration])  
+        thermal_expansion = 10000*thermal_expansion_alpha_P(t, temp,  energy_list[0: (iteration+1)*frames_per_iteration])  
         f_local.write('After iteration %03d: %10.4f\n'%(iteration+1, thermal_expansion))
     
     if quiet == 'yes':
-      thermal_expansion = 10000*thermal_expansion_alpha_P(Gas_constant, t, temp,  energy_list)
+      thermal_expansion = 10000*thermal_expansion_alpha_P(t, temp,  energy_list)
 
     f_summary.write('%10.3f'%(thermal_expansion))          
 
@@ -172,11 +167,11 @@ def mdtraj_analysis(quiet, bulk, water_index, summary_file, local_file, cycle, w
         accumulative_volume = np.array(volume_list[0:(iteration+1)*frames_per_iteration],float)
         
         # See the TIP4P-EW paper by Horn et al., or the SI of OPC paper by Izadi and Onufriev
-        heat = - np.mean(accumulative_energy) * kj2kcal / float(waters) + Gas_constant * temp * kj2kcal * j2kj\
+        heat = - np.mean(accumulative_energy) * kj2kcal / float(waters) + GAS_CONSTANT * temp * kj2kcal * j2kj\
              - np.mean(accumulative_volume) * nm3toA3 * convert_pressure/float(waters) + Cvib + Cni + Cx # Epol is not counted for now    
         f_local.write('After iteration %03d: %10.4f\n'%(iteration+1, heat))                  
     
-    final_heat = - np.mean(average_energy) * kj2kcal / float(waters) + Gas_constant * temp * kj2kcal * j2kj\
+    final_heat = - np.mean(average_energy) * kj2kcal / float(waters) + GAS_CONSTANT * temp * kj2kcal * j2kj\
              - np.mean(average_volume) * nm3toA3 * convert_pressure/float(waters) + Cvib + Cni + Cx
     # The Cpol term is not included here because:
     # "There is a bit of a philosophical question about whether to include it. -- Niel Henriksen"
@@ -193,11 +188,11 @@ def mdtraj_analysis(quiet, bulk, water_index, summary_file, local_file, cycle, w
     if quiet == 'no':
       f_local.close()
 
-def thermal_expansion_alpha_P(R_value, traj, temperature, energies):
+def thermal_expansion_alpha_P(traj, temperature, energies):
     """
     Obtained from the source code of MDtraj
     """    
-    gas_constant = R_value * u.joule / u.kelvin / u.mole
+    gas_constant = GAS_CONSTANT * u.joule / u.kelvin / u.mole
     temperature = temperature * u.kelvin  
     mean_volume = traj.unitcell_volumes.mean()
 
