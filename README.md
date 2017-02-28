@@ -7,8 +7,8 @@ Written by Jane Yin
 
 Waterbot is a small program that allows you to evaluate the bulk properties of new water models. It can assess multiple water models 
 in one click, and can compute five critical bulk properties from your MD simulations of water: density, enthalpy of vaporization, dielectric 
-constant, isothermal compressibility and thermal expansion coefficient. I am still working on expanding its funtionality, but right now it 
-only suports perturbing the van der waals parameters of rigid three site water model (TIP3P).
+constant, isothermal compressibility and thermal expansion coefficient. I am still working on expanding its funtionality, but currently it 
+suports perturbing the van der Waals parameters of rigid three site water model (TIP3P).
 
 In order to run Waterbot, you need to first install AMBER (for equilibrating and generating the topology file), OpenMM and MDtraj. 
 You may also need a stand-alone version of Parmed, if it is not included in your AmberTools package. The production phase will be performed
