@@ -34,7 +34,7 @@ To run simulations and compute water properties, you only need to type:
 
 python2 waterbot.py  -i aterbot.in    -p water_param.dat   -o waterbot.out
 
-The "-i" flag indicates the Waterbot input fiel, which stores the user defined options. A sample file waterbot.in is provided here.
+The "-i" flag indicates the Waterbot input file, which stores the user defined options. A sample file waterbot.in is provided here.
 
 The "-p" flag indicates a parameter file, which should contains the radius and epsilon parameters of your water models.
 A sample file water_param.dat is provided.
