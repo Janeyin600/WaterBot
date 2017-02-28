@@ -60,9 +60,9 @@ properties, or you could put zero weight on proerties that are not siginicant to
 The geometry and non-bonded parameters of TIP3P water is hand coded in waterbot.py for now, so are the the experimental properties 
 of the bulk water in liquid phase at 298.15 K. Please check carefully to make sure those are the numbers you desire. If you want to 
 test water properties at different temperatures, you may need to modify the experimental values in the scripts.
-If you have any feedback about this program, drop me a few lines to jiyin >_< ucsd.edu. I wil be also glad to answer any questions you have.
+If you have any feedback about this program, drop me a few lines to jiyin >_< ucsd.edu. I will be also glad to answer any questions you have.
 
 Acknowledgements
 
-Many thanks to Niel Henriksen who provided great advice on how to compute enthalpy of vaporization, and David Slochower who provided siginicant help on my Python programming. And our project leader, Michael Gilson, of course. 
+Many thanks to Niel Henriksen who provided great advice on how to compute enthalpy of vaporization, and David Slochower who provided generous help on my Python programming. And our project leader, Michael Gilson, of course. 
 
