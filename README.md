@@ -1,9 +1,11 @@
 # WaterBot 
 a beta version 
 
-Written by Jane Yin
+Written by Jane Yin (last updated Aug 10, 2017)
 # A set of python scripts that provides a quick testing of the bulk properties for batch of new water models
 
+
+# Introduction #
 
 Waterbot is a small program that allows you to evaluate the bulk properties of new water models. It can assess multiple water models 
 in one click, and can compute five critical bulk properties from your MD simulations of water: density, enthalpy of vaporization, dielectric 
@@ -14,25 +16,27 @@ In order to run Waterbot, you need to first install AMBER (for equilibrating and
 You may also need a stand-alone version of Parmed, if it is not included in your AmberTools package. The production phase will be performed
 using OpenMM and the h5 format trajectories will be generated for analysis using MDtraj program.
 
-The lastest version of OpenMM is 7.1. You can quickly install it using this command:
+# How to install #
 
-conda install -c omnia openmm
+Running Waterbot requires the installation of OpenMM. The lastest version of OpenMM is 7.1. You can quickly install it using this command:
 
-Note that the 7.1 version requires CUDA 8.0 if you usually run simulations using Nvidia GPUs.
+    conda install -c omnia openmm
+
+Note that the 7.1 version requires CUDA driver version of 8.0 if you usually run simulations using Nvidia GPUs.
 
 You can install MDtraj by tying the following command:
 
-conda install -c omnia mdtraj
+    conda install -c omnia mdtraj
 
-
+# Usage #
 
 To print the help message of WaterBot, simply issue the command:
 
-python waterbot.py  or python waterbot.py -help
+    python waterbot.py  or python waterbot.py -help
    
 To run simulations and compute water properties, you only need to type:
 
-python2 waterbot.py  -i aterbot.in    -p water_param.dat   -o waterbot.out
+    python2 waterbot.py  -i aterbot.in    -p water_param.dat   -o waterbot.out
 
 The "-i" flag indicates the Waterbot input file, which stores the user defined options. A sample file waterbot.in is provided here.
 
@@ -42,6 +46,8 @@ A sample file water_param.dat is provided.
 The "-o" flag indidates the name of the output file, which reports the values of five properties mentioned above, as well as a water score.
 A sample file janewaterbot.out is provided. The "-o" flag is optional: if the name of the output file is not specified, the default filename
 waterbot.out will be used.
+
+# How to write your user input file #
 
 Then inside the waterbot input file (waterbot.in):
 
@@ -62,7 +68,7 @@ of the bulk water in liquid phase at 298.15 K. Please check carefully to make su
 test water properties at different temperatures, you may need to modify the experimental values in the scripts.
 If you have any feedback about this program, drop me a few lines to jiyin >_< ucsd.edu. I will be also glad to answer any questions you have.
 
-Acknowledgements
+# Acknowledgements #
 
 Many thanks to Niel Henriksen who provided great advice on how to compute enthalpy of vaporization, and David Slochower who provided generous help on my Python programming. And our project leader, Michael Gilson, of course. 
 
